@@ -10,6 +10,6 @@ def index():
 
 
 @app.route("/reload")
-def reload():
+def reload_config():
     load_monitors()
     return redirect(url_for("index"))

@@ -3,19 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Status Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ url_for("static", filename="css/site.css") }}">
+    <script src="{{ url_for("static", filename="js/jquery.min.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/bootstrap.min.js") }}"></script>
 </head>
 <body>
-    <a href="{{ url_for("reload") }}">
-        <button>Reload</button>
-    </a>
-    <ul>
-        {% for service in services | sort(attribute="name") %}
-            <li>
-                <div class="{% if service.get_status() %}statusGood{% else %}statusBad{% endif %}"></div>
-                {{ service.name }} ({{ service.type }})
-            </li>
-        {% endfor %}
-    </ul>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Service Monitor</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div class="container">
+        <h2>Services</h2>
+        <a href="{{ url_for("reload_config") }}">
+            <button>Reload</button>
+        </a>
+        <ul>
+            {% set count = 0 %}
+            {% for service in services | sort(attribute="name") %}
+                <li>
+                    <div class="{% if service.get_status() %}statusGood{% else %}statusBad{% endif %}"></div>
+                    {{ service.name }} ({{ service.type }})
+                    <a href="#details{{ count }}" data-toggle="collapse">details</a>
+                    <div id="details{{ count }}" class="collapse">
+                        {{ service.details() }}
+                    </div>
+                </li>
+                {% set count = count + 1 %}
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

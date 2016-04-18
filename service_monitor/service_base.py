@@ -1,10 +1,13 @@
+from flask import render_template_string
+
+
 class ServiceBase(object):
     type = "Base"
 
     def __init__(self, name, address, options=None):
         self.name = name
         if address == "auto":
-            self.address = self._resolve_auto_address
+            self.address = self._resolve_auto_address()
         else:
             self.address = address
         self.options = options if options is not None else {}
@@ -14,5 +17,8 @@ class ServiceBase(object):
 
     def _resolve_auto_address(self):
         raise NotImplementedError
+
+    def details(self):
+        return render_template_string("Address: {{ service.address }}", service=self)
 
 

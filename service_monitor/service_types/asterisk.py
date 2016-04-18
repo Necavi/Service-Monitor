@@ -8,4 +8,4 @@ class AsteriskService(ServiceBase):
         return True
 
     def _resolve_auto_address(self):
-        pass
+        return "auto"
