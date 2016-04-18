@@ -32,7 +32,7 @@
                     {{ service.name }} ({{ service.type }})
                     <a href="#details{{ count }}" data-toggle="collapse">details</a>
                     <div id="details{{ count }}" class="collapse">
-                        {{ service.details() }}
+                        {{ service.details() | safe }}
                     </div>
                 </li>
                 {% set count = count + 1 %}

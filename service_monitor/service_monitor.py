@@ -32,7 +32,8 @@ def load_monitors():
         cfg = ConfigObj("./service_monitor/services.cfg")
         for name, service in cfg.items():
             if service["type"] in service_types:
-                services.add(service_types[service["type"]](name, service["address"]))
+                services.add(service_types[service["type"]](name, service["address"],
+                                    {key: value for key, value in service.items() if key not in ("type", "address")}))
             else:
                 raise TypeNotFoundError(name, service["type"])
 

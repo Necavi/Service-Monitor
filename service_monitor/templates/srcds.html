@@ -1,0 +1,20 @@
+<table class="table len35">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Address</td>
+            <td>{{ service.address }}</td>
+        </tr>
+        {% for key in service.options["query_keys"] %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ info[key] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
