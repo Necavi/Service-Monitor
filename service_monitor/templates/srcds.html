@@ -11,10 +11,12 @@
             <td>{{ service.address }}</td>
         </tr>
         {% for key in service.options["query_keys"] %}
-            <tr>
-                <td>{{ key }}</td>
-                <td>{{ info[key] }}</td>
-            </tr>
+            {% if key in info %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ info[key] }}</td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </tbody>
 </table>

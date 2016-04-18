@@ -33,7 +33,7 @@ class SrcdsService(ServiceBase):
             return self.info
         try:
             self.info = self.server.get_info()
-        except NoResponseError:
+        except (NoResponseError, OSError):
             self.info = {}
         self.next_query = time() + 15
         return self.info
