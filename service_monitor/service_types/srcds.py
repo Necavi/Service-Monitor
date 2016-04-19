@@ -1,13 +1,10 @@
 from time import time
 
-from flask import render_template
-
 from valve.source.a2s import ServerQuerier, NoResponseError
 
 from service_monitor.service_base import ServiceBase
 
 
-# noinspection PyAbstractClass
 class SrcdsService(ServiceBase):
     type = "srcds"
 

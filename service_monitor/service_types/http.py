@@ -2,7 +2,6 @@ from service_monitor.service_base import ServiceBase
 from requests import get, ConnectionError
 
 
-# noinspection PyAbstractClass
 class AsteriskService(ServiceBase):
     type = "HTTP"
 

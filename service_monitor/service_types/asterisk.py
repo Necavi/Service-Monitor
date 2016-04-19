@@ -6,6 +6,3 @@ class AsteriskService(ServiceBase):
 
     def get_status(self):
         return True
-
-    def _resolve_auto_address(self):
-        return "auto"
