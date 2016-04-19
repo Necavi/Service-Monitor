@@ -25,7 +25,7 @@ colours = {
 def colourize(buff):
     reading_colour = False
     in_colour = False
-    out = "<span style='background-color: #000000'>"
+    out = "<span class='outline'>"
     for char in buff:
         if char == "§":
             reading_colour = True
@@ -65,7 +65,7 @@ class MinecraftService(ServiceBase):
         details.update({
             "Max Players": info.players.max,
             "Online Players": info.players.online,
-            "Description": colourize(info.description),
+            "Description": colourize(info.description.replace("\n", "<br>")),
             "Favicon": "<img src='{}' />".format(info.favicon)
         })
         return details
