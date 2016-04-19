@@ -37,7 +37,7 @@
                                 {% for key, value in service.details() | dictsort %}
                                     <tr>
                                         <td>{{ key | title }}</td>
-                                        <td>{{ value }}</td>
+                                        <td>{{ value | safe }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
