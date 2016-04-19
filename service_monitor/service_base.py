@@ -19,6 +19,6 @@ class ServiceBase(object):
         raise NotImplementedError
 
     def details(self):
-        return render_template_string("Address: {{ service.address }}", service=self)
+        return {"Address": self.address}
 
 

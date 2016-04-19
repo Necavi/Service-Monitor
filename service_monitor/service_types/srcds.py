@@ -26,7 +26,12 @@ class SrcdsService(ServiceBase):
             return False
 
     def details(self):
-        return render_template("srcds.html", service=self, info=self._get_server_info())
+        details = super().details()
+        details.update({
+            key.replace("_", " "): value for key, value in self._get_server_info().items()
+            if key in self.options["query_keys"]
+        })
+        return details
 
     def _get_server_info(self):
         if self.next_query > time():

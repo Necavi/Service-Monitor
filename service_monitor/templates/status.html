@@ -32,7 +32,16 @@
                     {{ service.name }} ({{ service.type }})
                     <a href="#details{{ count }}" data-toggle="collapse">details</a>
                     <div id="details{{ count }}" class="collapse">
-                        {{ service.details() | safe }}
+                        <table class="table len50">
+                            <tbody>
+                                {% for key, value in service.details() | dictsort %}
+                                    <tr>
+                                        <td>{{ key | title }}</td>
+                                        <td>{{ value }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </li>
                 {% set count = count + 1 %}
