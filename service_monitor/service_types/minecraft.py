@@ -25,22 +25,22 @@ colours = {
 def colourize(buff):
     reading_colour = False
     in_colour = False
-    out = ""
+    out = "<span style='background-color: #000000'>"
     for char in buff:
         if char == "§":
-            if in_colour:
-                out += "</span>"
-                in_colour = False
             reading_colour = True
         elif reading_colour:
             if char in colours.keys():
+                if in_colour:
+                    out += "</span>"
                 out += "<span style='color: #{}'>".format(colours[char])
-            else:
-                reading_colour = False
+                in_colour = True
+            reading_colour = False
         else:
             out += char
     if in_colour:
         out += "</span>"
+    out += "</span>"
     return out
 
 
@@ -65,6 +65,7 @@ class MinecraftService(ServiceBase):
         details.update({
             "Max Players": info.players.max,
             "Online Players": info.players.online,
-            "Description": colourize(info.description)
+            "Description": colourize(info.description),
+            "Favicon": "<img src='{}' />".format(info.favicon)
         })
         return details
