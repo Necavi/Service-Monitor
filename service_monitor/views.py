@@ -6,7 +6,8 @@ from .service_monitor import load_monitors
 
 @app.route("/")
 def index():
-    return render_template("status.html", services=services)
+    return render_template("status.html", services=
+    [(service, service.get_status(), service.details()) for service in sorted(services, key=lambda x: x.name)])
 
 
 @app.route("/reload")

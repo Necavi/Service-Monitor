@@ -26,15 +26,15 @@
         </a>
         <ul>
             {% set count = 0 %}
-            {% for service in services | sort(attribute="name") %}
+            {% for service, status, details in services %}
                 <li>
-                    <div class="{% if service.get_status() %}statusGood{% else %}statusBad{% endif %}"></div>
+                    <div class="{% if status %}statusGood{% else %}statusBad{% endif %}"></div>
                     {{ service.name }} ({{ service.type }})
                     <a href="#details{{ count }}" data-toggle="collapse">details</a>
                     <div id="details{{ count }}" class="collapse">
                         <table class="table len50">
                             <tbody>
-                                {% for key, value in service.details() | dictsort %}
+                                {% for key, value in details | dictsort %}
                                     <tr>
                                         <td>{{ key | title }}</td>
                                         <td>{{ value | safe }}</td>
