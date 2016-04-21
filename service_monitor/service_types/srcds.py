@@ -25,7 +25,8 @@ class SrcdsService(ServiceBase):
     def details(self):
         details = super().details()
         details.update({
-            key.replace("_", " "): value for key, value in self._get_server_info().items()
+            key.replace("_", " "): value if key != "vac_enabled" else "Yes" if value is 1 else "No"
+            for key, value in self._get_server_info().items()
             if key in self.options["query_keys"]
         })
         return details
