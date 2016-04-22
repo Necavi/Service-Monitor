@@ -1,3 +1,5 @@
+from time import time
+
 from mcstatus import MinecraftServer
 
 from service_monitor.service_base import ServiceBase
@@ -50,22 +52,30 @@ class MinecraftService(ServiceBase):
     def __init__(self, name, address, options=None):
         super().__init__(name, address, options)
         self.server = MinecraftServer.lookup(self.address)
+        self.next_query = 0
+        self.info = None
 
     def get_status(self):
-        try:
-            self.server.status()
-            return True
-        except OSError as e:
-            print(e)
-            return False
+        return self._get_server_info() is not None
 
     def details(self):
         details = super().details()
-        info = self.server.status()
-        details.update({
-            "Max Players": info.players.max,
-            "Online Players": info.players.online,
-            "Description": colourize(info.description.replace("\n", "<br>")),
-            "Favicon": "<img src='{}' />".format(info.favicon)
-        })
+        info = self._get_server_info()
+        if info is not None:
+            details.update({
+                "Max Players": info.players.max,
+                "Online Players": info.players.online,
+                "Description": colourize(info.description.replace("\n", "<br>")),
+                "Favicon": "<img src='{}' />".format(info.favicon)
+            })
         return details
+
+    def _get_server_info(self):
+        if self.next_query > time():
+            return self.info
+        try:
+            self.info = self.server.status()
+        except OSError:
+            self.info = None
+        self.next_query = time() + 15
+        return self.info
